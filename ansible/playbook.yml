@@ -1,0 +1,29 @@
+---
+- name: Day 31 Ansible Challenge
+  hosts: devops_nodes
+  become: yes
+  tasks:
+
+    - name: Create a new user
+      user:
+        name: devopsuser
+        state: present
+        shell: /bin/bash
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Copy test file to /tmp
+      copy:
+        src: testfile.txt
+        dest: /tmp/testfile.txt
+        mode: '0644'
